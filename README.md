@@ -5,9 +5,10 @@ Este pacote vai te ajudar a se conectar com os serviços da AWS de forma mais f�
 sem precisar se preocupar com documentação e quais os parâmetros necessários para funcionar.
 
 
-# Serviços
+Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SDK da AWS.
 
-## DynamoDB
+
+# Serviços
 
 ### DynamoDB
 
@@ -26,8 +27,6 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 #### scan
 
 
-## Lambda
-
 ### Lambda
 
 **Parameters**: lambdaFunctionName: string, config?: LambdaClientConfig
@@ -35,16 +34,12 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 #### invoke
 
 
-## SNS
-
 ### SNS
 
 **Parameters**: config?: SNSClientConfig
 
 #### publish
 
-
-## SQS
 
 ### SQS
 

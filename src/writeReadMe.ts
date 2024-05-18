@@ -13,13 +13,12 @@ function generateReadMe() {
   let readmeContent = `# AWS SDK Services Helper\n\n
 Este pacote vai te ajudar a se conectar com os serviços da AWS de forma mais fácil e rápida, 
 sem precisar se preocupar com documentação e quais os parâmetros necessários para funcionar.\n\n
+Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SDK da AWS.\n\n
 # Serviços\n\n`
 
   folders.forEach((folder) => {
     const folderPath = path.join(servicesPath, folder)
     const files = fs.readdirSync(folderPath)
-
-    readmeContent += `## ${folder}\n\n`
 
     files.forEach((file) => {
       const filePath = path.join(folderPath, file)
