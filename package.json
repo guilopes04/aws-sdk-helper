@@ -1,0 +1,33 @@
+{
+  "name": "aws-sdk-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "writeRM": "node dist/writeReadMe.js",
+    "save": "git add . && git commit -m 'generic save' && git push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "eslint": "^8.57.0",
+    "typescript": "^4.9.5"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.577.0",
+    "@aws-sdk/client-lambda": "^3.577.0",
+    "@aws-sdk/client-sns": "^3.577.0",
+    "@aws-sdk/client-sqs": "^3.577.0",
+    "@aws-sdk/lib-dynamodb": "^3.577.0",
+    "aws-sdk": "^2.1623.0"
+  }
+}
