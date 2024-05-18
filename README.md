@@ -9,6 +9,8 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 
 ## DynamoDB
 
+### DynamoDB
+
 **Parameters**: tableName: string, config?: DynamoDBClientConfig
 
 #### getItem
@@ -23,19 +25,28 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 
 #### scan
 
+
 ## Lambda
+
+### Lambda
 
 **Parameters**: lambdaFunctionName: string, config?: LambdaClientConfig
 
 #### invoke
 
+
 ## SNS
+
+### SNS
 
 **Parameters**: config?: SNSClientConfig
 
 #### publish
 
+
 ## SQS
+
+### SQS
 
 **Parameters**: config?: SQSClientConfig
 
@@ -44,4 +55,5 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 #### receiveMessages
 
 #### deleteMessage
+
 
