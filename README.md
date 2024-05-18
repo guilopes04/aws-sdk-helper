@@ -17,14 +17,14 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 ### DynamoDB
 
-**Parameters**: tableName: string, config?: DynamoDBClientConfig
+**Parameters**: `tableName: string, config?: DynamoDBClientConfig`
 
 <details>
 <summary>getItem</summary>
 
-**Parameters**: key: Record<string, any>
+**Parameters**: `key: Record<string, any>`
 
-**Return Type**: Promise<GetCommandOutput>
+**Return Type**: `Promise<GetCommandOutput>`
 
 
 
@@ -33,9 +33,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>putItem</summary>
 
-**Parameters**: item: Record<string, any>
+**Parameters**: `item: Record<string, any>`
 
-**Return Type**: Promise<PutCommandOutput>
+**Return Type**: `Promise<PutCommandOutput>`
 
 
 
@@ -44,9 +44,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>query</summary>
 
-**Parameters**: indexName: string, indexQueryParams: Record<string, any>
+**Parameters**: `indexName: string, indexQueryParams: Record<string, any>`
 
-**Return Type**: Promise<QueryCommandOutput>
+**Return Type**: `Promise<QueryCommandOutput>`
 
 
 
@@ -55,9 +55,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>updateItem</summary>
 
-**Parameters**: key: Record<string, any>, item: Record<string, any>
+**Parameters**: `key: Record<string, any>, item: Record<string, any>`
 
-**Return Type**: Promise<UpdateCommandOutput>
+**Return Type**: `Promise<UpdateCommandOutput>`
 
 
 
@@ -66,9 +66,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>deleteItem</summary>
 
-**Parameters**: key: Record<string, any>
+**Parameters**: `key: Record<string, any>`
 
-**Return Type**: Promise<DeleteCommandOutput>
+**Return Type**: `Promise<DeleteCommandOutput>`
 
 
 
@@ -77,9 +77,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>scan</summary>
 
-**Parameters**: 
+**Parameters**: ``
 
-**Return Type**: Promise<ScanCommandOutput>
+**Return Type**: `Promise<ScanCommandOutput>`
 
 
 
@@ -97,14 +97,14 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 ### Lambda
 
-**Parameters**: lambdaFunctionName: string, config?: LambdaClientConfig
+**Parameters**: `lambdaFunctionName: string, config?: LambdaClientConfig`
 
 <details>
 <summary>invoke</summary>
 
-**Parameters**: functionName: string, payload: Record<string, any>
+**Parameters**: `functionName: string, payload: Record<string, any>`
 
-**Return Type**: Promise<InvokeCommandOutput>
+**Return Type**: `Promise<InvokeCommandOutput>`
 
 
 
@@ -122,14 +122,14 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 ### SNS
 
-**Parameters**: config?: SNSClientConfig
+**Parameters**: `config?: SNSClientConfig`
 
 <details>
 <summary>publish</summary>
 
-**Parameters**: topicArn: string, message: string
+**Parameters**: `topicArn: string, message: string`
 
-**Return Type**: Promise<PublishCommandOutput>
+**Return Type**: `Promise<PublishCommandOutput>`
 
 
 
@@ -147,14 +147,14 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 ### SQS
 
-**Parameters**: config?: SQSClientConfig
+**Parameters**: `config?: SQSClientConfig`
 
 <details>
 <summary>sendMessage</summary>
 
-**Parameters**: queueUrl: string, messageBody: string
+**Parameters**: `queueUrl: string, messageBody: string`
 
-**Return Type**: Promise<SendMessageCommandOutput>
+**Return Type**: `Promise<SendMessageCommandOutput>`
 
 
 
@@ -163,9 +163,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>receiveMessages</summary>
 
-**Parameters**: queueUrl: string, maxNumberOfMessages: number = 1
+**Parameters**: `queueUrl: string, maxNumberOfMessages: number = 1`
 
-**Return Type**: Promise<ReceiveMessageCommandOutput>
+**Return Type**: `Promise<ReceiveMessageCommandOutput>`
 
 
 
@@ -174,9 +174,9 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>deleteMessage</summary>
 
-**Parameters**: queueUrl: string, receiptHandle: string
+**Parameters**: `queueUrl: string, receiptHandle: string`
 
-**Return Type**: Promise<DeleteMessageCommandOutput>
+**Return Type**: `Promise<DeleteMessageCommandOutput>`
 
 
 

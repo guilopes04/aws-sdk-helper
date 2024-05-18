@@ -86,7 +86,7 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
                     .join(', ')
                   const methodReturnType = method.type?.getText() || 'void'
 
-                  const methodDescription = `**Parameters**: ${methodParameters}\n\n**Return Type**: ${methodReturnType}\n\n`
+                  const methodDescription = `**Parameters**: \`${methodParameters}\`\n\n**Return Type**: \`${methodReturnType}\`\n\n`
 
                   resource.methods.push({
                     name: methodName,
@@ -108,7 +108,7 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
     readmeContent += `<!-- Add method details here -->\n\n`
 
     readmeContent += `### ${resource.name}\n\n`
-    readmeContent += `**Parameters**: ${resource.parameters}\n\n`
+    readmeContent += `**Parameters**: \`${resource.parameters}\`\n\n`
 
     resource.methods.forEach((method) => {
       readmeContent += `<details>\n`
