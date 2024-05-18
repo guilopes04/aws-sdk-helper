@@ -4,6 +4,12 @@ import ts from 'typescript'
 
 const servicesPath = 'src/services'
 
+interface Resource {
+  name: string
+  parameters: string
+  methods: { name: string; description: string }[]
+}
+
 function generateReadMe() {
   const folders = fs
     .readdirSync(servicesPath, { withFileTypes: true })
@@ -15,6 +21,8 @@ Este pacote vai te ajudar a se conectar com os serviços da AWS de forma mais f�
 sem precisar se preocupar com documentação e quais os parâmetros necessários para funcionar.\n\n
 Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SDK da AWS.\n\n
 # Serviços\n\n`
+
+  const resources: Resource[] = []
 
   folders.forEach((folder) => {
     const folderPath = path.join(servicesPath, folder)
@@ -55,21 +63,63 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
           .join(', ')
 
         if (className) {
-          readmeContent += `### ${className}\n\n`
-          readmeContent += `**Parameters**: ${classParameters}\n\n`
+          const resource: Resource = {
+            name: className.replace('Resource', ''),
+            parameters: classParameters,
+            methods: []
+          }
 
           classDeclaration.members
             .filter((member: ts.Node) => ts.isMethodDeclaration(member))
-            .forEach((method: { name: { getText: () => any } }) => {
-              const methodName = method.name?.getText()
-              if (methodName) {
-                readmeContent += `#### ${methodName}\n\n`
+            .forEach(
+              (method: {
+                type: any
+                parameters: any
+                name: { getText: () => any }
+              }) => {
+                const methodName = method.name?.getText()
+                if (methodName) {
+                  const methodParameters = method.parameters
+                    .map((parameter: { getText: () => any }) =>
+                      parameter.getText()
+                    )
+                    .join(', ')
+                  const methodReturnType = method.type?.getText() || 'void'
+
+                  const methodDescription = `**Parameters**: ${methodParameters}\n\n**Return Type**: ${methodReturnType}\n\n`
+
+                  resource.methods.push({
+                    name: methodName,
+                    description: methodDescription
+                  })
+                }
               }
-            })
-          readmeContent += '\n'
+            )
+
+          resources.push(resource)
         }
       })
     })
+  })
+
+  resources.forEach((resource) => {
+    readmeContent += `<details>\n`
+    readmeContent += `<summary>${resource.name}</summary>\n\n`
+    readmeContent += `<!-- Add method details here -->\n\n`
+
+    readmeContent += `### ${resource.name}\n\n`
+    readmeContent += `**Parameters**: ${resource.parameters}\n\n`
+
+    resource.methods.forEach((method) => {
+      readmeContent += `<details>\n`
+      readmeContent += `<summary>${method.name}</summary>\n\n`
+      readmeContent += `${method.description}\n\n`
+      readmeContent += `</details>\n\n`
+    })
+    readmeContent += `</details>\n\n`
+
+    readmeContent +=
+      '\n -------------------------------------------------- \n\n'
   })
 
   fs.writeFileSync('README.md', readmeContent)

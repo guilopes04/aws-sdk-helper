@@ -10,45 +10,180 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 # Serviços
 
+<details>
+<summary>DynamoDB</summary>
+
+<!-- Add method details here -->
+
 ### DynamoDB
 
 **Parameters**: tableName: string, config?: DynamoDBClientConfig
 
-#### getItem
+<details>
+<summary>getItem</summary>
 
-#### putItem
+**Parameters**: key: Record<string, any>
 
-#### query
+**Return Type**: Promise<GetCommandOutput>
 
-#### updateItem
 
-#### deleteItem
 
-#### scan
+</details>
 
+<details>
+<summary>putItem</summary>
+
+**Parameters**: item: Record<string, any>
+
+**Return Type**: Promise<PutCommandOutput>
+
+
+
+</details>
+
+<details>
+<summary>query</summary>
+
+**Parameters**: indexName: string, indexQueryParams: Record<string, any>
+
+**Return Type**: Promise<QueryCommandOutput>
+
+
+
+</details>
+
+<details>
+<summary>updateItem</summary>
+
+**Parameters**: key: Record<string, any>, item: Record<string, any>
+
+**Return Type**: Promise<UpdateCommandOutput>
+
+
+
+</details>
+
+<details>
+<summary>deleteItem</summary>
+
+**Parameters**: key: Record<string, any>
+
+**Return Type**: Promise<DeleteCommandOutput>
+
+
+
+</details>
+
+<details>
+<summary>scan</summary>
+
+**Parameters**: 
+
+**Return Type**: Promise<ScanCommandOutput>
+
+
+
+</details>
+
+</details>
+
+
+ -------------------------------------------------- 
+
+<details>
+<summary>Lambda</summary>
+
+<!-- Add method details here -->
 
 ### Lambda
 
 **Parameters**: lambdaFunctionName: string, config?: LambdaClientConfig
 
-#### invoke
+<details>
+<summary>invoke</summary>
 
+**Parameters**: functionName: string, payload: Record<string, any>
+
+**Return Type**: Promise<InvokeCommandOutput>
+
+
+
+</details>
+
+</details>
+
+
+ -------------------------------------------------- 
+
+<details>
+<summary>SNS</summary>
+
+<!-- Add method details here -->
 
 ### SNS
 
 **Parameters**: config?: SNSClientConfig
 
-#### publish
+<details>
+<summary>publish</summary>
 
+**Parameters**: topicArn: string, message: string
+
+**Return Type**: Promise<PublishCommandOutput>
+
+
+
+</details>
+
+</details>
+
+
+ -------------------------------------------------- 
+
+<details>
+<summary>SQS</summary>
+
+<!-- Add method details here -->
 
 ### SQS
 
 **Parameters**: config?: SQSClientConfig
 
-#### sendMessage
+<details>
+<summary>sendMessage</summary>
 
-#### receiveMessages
+**Parameters**: queueUrl: string, messageBody: string
 
-#### deleteMessage
+**Return Type**: Promise<SendMessageCommandOutput>
 
+
+
+</details>
+
+<details>
+<summary>receiveMessages</summary>
+
+**Parameters**: queueUrl: string, maxNumberOfMessages: number = 1
+
+**Return Type**: Promise<ReceiveMessageCommandOutput>
+
+
+
+</details>
+
+<details>
+<summary>deleteMessage</summary>
+
+**Parameters**: queueUrl: string, receiptHandle: string
+
+**Return Type**: Promise<DeleteMessageCommandOutput>
+
+
+
+</details>
+
+</details>
+
+
+ -------------------------------------------------- 
 
