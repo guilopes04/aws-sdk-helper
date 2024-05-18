@@ -1,4 +1,4 @@
-# AWS Services Helper
+# AWS SDK Services Helper
 
 
 Este pacote vai te ajudar a se conectar com os serviços da AWS de forma mais fácil e rápida, 
@@ -8,8 +8,6 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 # Serviços
 
 ## DynamoDB
-
-### DynamoDB
 
 **Parameters**: tableName: string, config?: DynamoDBClientConfig
 
@@ -27,23 +25,17 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
 
 ## Lambda
 
-### Lambda
-
 **Parameters**: lambdaFunctionName: string, config?: LambdaClientConfig
 
 #### invoke
 
 ## SNS
 
-### SNS
-
 **Parameters**: config?: SNSClientConfig
 
 #### publish
 
 ## SQS
-
-### SQS
 
 **Parameters**: config?: SQSClientConfig
 

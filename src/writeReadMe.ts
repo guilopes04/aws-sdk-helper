@@ -56,7 +56,7 @@ sem precisar se preocupar com documentação e quais os parâmetros necessários
           .join(', ')
 
         if (className) {
-          readmeContent += `### ${className}\n\n`
+          //readmeContent += `### ${className}\n\n`
           readmeContent += `**Parameters**: ${classParameters}\n\n`
 
           classDeclaration.members
