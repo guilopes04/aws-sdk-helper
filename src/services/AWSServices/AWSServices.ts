@@ -20,6 +20,7 @@ export abstract class AWSService<T> implements AWSServiceType<T> {
 
   async execute<U>(command: any): Promise<U> {
     try {
+      console.log('• event command:', JSON.stringify(command))
       return await this.client.send(command)
     } catch (error) {
       Logger.error('Error executing command:', error)

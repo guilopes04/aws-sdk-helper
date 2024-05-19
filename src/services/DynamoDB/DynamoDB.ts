@@ -12,7 +12,8 @@ import {
   QueryCommandOutput,
   UpdateCommandOutput,
   DeleteCommandOutput,
-  ScanCommandOutput
+  ScanCommandOutput,
+  QueryCommandInput
 } from '@aws-sdk/lib-dynamodb'
 import { AWSService } from '../AWSServices/AWSServices'
 
@@ -21,8 +22,8 @@ interface DynamoDBType {
   getItem: (key: Record<string, any>) => Promise<GetCommandOutput>
   putItem: (item: Record<string, any>) => Promise<PutCommandOutput>
   query: (
-    indexName: string,
-    indexQueryParams: Record<string, any>
+    indexQueryParams: Record<string, any>,
+    indexName?: string
   ) => Promise<QueryCommandOutput>
   updateItem: (
     key: Record<string, any>,
@@ -52,6 +53,30 @@ export class DynamoDB
     )
   }
 
+  async getItemWithoutSK(
+    indexKeys: Record<string, any>,
+    skName: string,
+    indexName?: string
+  ): Promise<GetCommandOutput> {
+    const response = await this.query(indexKeys, indexName)
+    const item = response?.Items ? response.Items[0] : null
+    indexKeys[skName] = item ? item[skName] : indexKeys[skName]
+    const key = Object.keys(indexKeys).reduce(
+      (key: Record<string, any>, attribute) => {
+        if (item === null) return key
+        key[attribute] = item[attribute]
+        return key
+      },
+      {}
+    )
+    return await this.execute(
+      new GetCommand({
+        TableName: this.tableName,
+        Key: key
+      })
+    )
+  }
+
   async putItem(item: Record<string, any>): Promise<PutCommandOutput> {
     return await this.execute(
       new PutCommand({
@@ -62,11 +87,11 @@ export class DynamoDB
   }
 
   async query(
-    indexName: string,
-    indexQueryParams: Record<string, any>
+    indexQueryParams: Record<string, any>,
+    indexName?: string
   ): Promise<QueryCommandOutput> {
     const keyConditionExpression = Object.keys(indexQueryParams)
-      .map((attribute) => `${attribute} = :${attribute}`)
+      .map((attribute) => `#${attribute} = :${attribute}`)
       .join(' AND ')
     const expressionAttributeValues: Record<string, any> = Object.entries(
       indexQueryParams
@@ -74,14 +99,24 @@ export class DynamoDB
       values[`:${attribute}`] = value
       return values
     }, {})
-    return await this.execute(
-      new QueryCommand({
-        TableName: this.tableName,
-        IndexName: indexName,
-        KeyConditionExpression: keyConditionExpression,
-        ExpressionAttributeValues: expressionAttributeValues
-      })
-    )
+
+    const expressionAttributeNames: Record<string, any> = Object.entries(
+      indexQueryParams
+    ).reduce((values: Record<string, any>, [attribute]) => {
+      values[`#${attribute}`] = attribute
+      return values
+    }, {})
+
+    const params: QueryCommandInput = {
+      TableName: this.tableName,
+      KeyConditionExpression: keyConditionExpression,
+      ExpressionAttributeValues: expressionAttributeValues,
+      ExpressionAttributeNames: expressionAttributeNames,
+      ScanIndexForward: false
+    }
+
+    if (indexName) params['IndexName'] = indexName
+    return await this.execute(new QueryCommand(params))
   }
 
   async updateItem(
