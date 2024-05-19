@@ -1,9 +1,8 @@
 import { DynamoDB } from './services/DynamoDB/DynamoDB'
+import { SNS } from './services/SNS/Sns'
 
 const main = async () => {
-  const repository = new DynamoDB('caronas')
-  const response = await repository.scan()
-  console.log('• response:', JSON.stringify(response))
+  console.log('espaço para testar')
 }
 
 main()

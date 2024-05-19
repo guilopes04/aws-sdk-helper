@@ -6,62 +6,70 @@ import {
   ReceiveMessageCommand,
   ReceiveMessageCommandOutput,
   DeleteMessageCommand,
-  DeleteMessageCommandOutput
+  DeleteMessageCommandOutput,
+  SendMessageBatchCommand
 } from '@aws-sdk/client-sqs'
-import { Logger } from '../../logger/logger'
+import { AWSService } from '../AWSServices/AWSServices'
 
-export class SQS {
-  private readonly client: SQSClient
-
-  constructor(config?: SQSClientConfig) {
-    this.client = new SQSClient(config ? config : {})
+interface SQSType {
+  sendMessage: (messageBody: string) => Promise<SendMessageCommandOutput>
+  receiveMessages: (
+    maxNumberOfMessages?: number
+  ) => Promise<ReceiveMessageCommandOutput>
+  deleteMessage: (receiptHandle: string) => Promise<DeleteMessageCommandOutput>
+  sendMessageBatch: (
+    messages: Record<string, any>[]
+  ) => Promise<SendMessageCommandOutput>
+}
+export class SQS extends AWSService<SQSClient> implements SQSType {
+  readonly queueUrl: string
+  constructor(queueUrl: string, config?: SQSClientConfig) {
+    super(new SQSClient(config ? config : {}))
+    this.queueUrl = queueUrl
   }
 
-  async sendMessage(
-    queueUrl: string,
-    messageBody: string
-  ): Promise<SendMessageCommandOutput> {
-    try {
-      const command = new SendMessageCommand({
-        QueueUrl: queueUrl,
+  async sendMessage(messageBody: string): Promise<SendMessageCommandOutput> {
+    return await this.client.send(
+      new SendMessageCommand({
+        QueueUrl: this.queueUrl,
         MessageBody: messageBody
       })
-      return await this.client.send(command)
-    } catch (error) {
-      Logger.error('Error sending message to SQS queue:', error)
-      throw error
-    }
+    )
+  }
+
+  async sendMessageBatch(
+    messages: Record<string, any>[]
+  ): Promise<SendMessageCommandOutput> {
+    return await this.client.send(
+      new SendMessageBatchCommand({
+        QueueUrl: this.queueUrl,
+        Entries: messages.map((message, index) => ({
+          Id: `message${index}`,
+          MessageBody: JSON.stringify(message)
+        }))
+      })
+    )
   }
 
   async receiveMessages(
-    queueUrl: string,
     maxNumberOfMessages: number = 1
   ): Promise<ReceiveMessageCommandOutput> {
-    try {
-      const command = new ReceiveMessageCommand({
-        QueueUrl: queueUrl,
+    return await this.client.send(
+      new ReceiveMessageCommand({
+        QueueUrl: this.queueUrl,
         MaxNumberOfMessages: maxNumberOfMessages
       })
-      return await this.client.send(command)
-    } catch (error) {
-      Logger.error('Error receiving messages from SQS queue:', error)
-      throw error
-    }
+    )
   }
 
   async deleteMessage(
-    queueUrl: string,
     receiptHandle: string
   ): Promise<DeleteMessageCommandOutput> {
-    try {
-      const command = new DeleteMessageCommand({
-        QueueUrl: queueUrl,
+    return await this.client.send(
+      new DeleteMessageCommand({
+        QueueUrl: this.queueUrl,
         ReceiptHandle: receiptHandle
       })
-      return await this.client.send(command)
-    } catch (error) {
-      Logger.error('Error deleting message from SQS queue:', error)
-      throw error
-    }
+    )
   }
 }

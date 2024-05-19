@@ -2,30 +2,38 @@ import {
   LambdaClient,
   LambdaClientConfig,
   InvokeCommand,
-  InvokeCommandOutput
+  InvokeCommandOutput,
+  InvocationType
 } from '@aws-sdk/client-lambda'
-import { Logger } from '../../logger/logger'
+import { AWSService } from '../AWSServices/AWSServices'
 
-export class Lambda {
-  private readonly client: LambdaClient
+interface LambdaInvokeInputType {
+  payload: Record<string, any>
+  invocationType?: InvocationType
+}
 
+interface LambdaType {
+  readonly functionName: string
+  invoke: (input: LambdaInvokeInputType) => Promise<InvokeCommandOutput>
+}
+
+export class Lambda extends AWSService<LambdaClient> implements LambdaType {
+  readonly functionName: string
   constructor(lambdaFunctionName: string, config?: LambdaClientConfig) {
-    this.client = new LambdaClient(config ? config : {})
+    super(new LambdaClient(config ? config : {}))
+    this.functionName = lambdaFunctionName
   }
 
-  async invoke(
-    functionName: string,
-    payload: Record<string, any>
-  ): Promise<InvokeCommandOutput> {
-    try {
-      const command = new InvokeCommand({
-        FunctionName: functionName,
-        Payload: new TextEncoder().encode(JSON.stringify(payload))
+  async invoke({
+    payload,
+    invocationType
+  }: LambdaInvokeInputType): Promise<InvokeCommandOutput> {
+    return await this.client.send(
+      new InvokeCommand({
+        FunctionName: this.functionName,
+        Payload: new TextEncoder().encode(JSON.stringify(payload)),
+        InvocationType: invocationType ? invocationType : 'RequestResponse'
       })
-      return await this.client.send(command)
-    } catch (error) {
-      Logger.error('Error invoking Lambda function:', error)
-      throw error
-    }
+    )
   }
 }

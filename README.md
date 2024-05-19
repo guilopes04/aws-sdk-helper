@@ -31,6 +31,17 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 </details>
 
 <details>
+<summary>getItemWithoutSK</summary>
+
+**Parameters**: `indexKeys: Record<string, any>, skName: string, indexName?: string`
+
+**Return Type**: `Promise<GetCommandOutput>`
+
+
+
+</details>
+
+<details>
 <summary>putItem</summary>
 
 **Parameters**: `item: Record<string, any>`
@@ -44,7 +55,7 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>query</summary>
 
-**Parameters**: `indexName: string, indexQueryParams: Record<string, any>`
+**Parameters**: `indexQueryParams: Record<string, any>, indexName?: string`
 
 **Return Type**: `Promise<QueryCommandOutput>`
 
@@ -102,7 +113,10 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>invoke</summary>
 
-**Parameters**: `functionName: string, payload: Record<string, any>`
+**Parameters**: `{
+    payload,
+    invocationType
+  }: LambdaInvokeInputType`
 
 **Return Type**: `Promise<InvokeCommandOutput>`
 
@@ -122,12 +136,45 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 ### SNS
 
-**Parameters**: `config?: SNSClientConfig`
+**Parameters**: `topicArn?: string, config?: SNSClientConfig`
 
 <details>
 <summary>publish</summary>
 
-**Parameters**: `topicArn: string, message: string`
+**Parameters**: `message: string`
+
+**Return Type**: `Promise<PublishCommandOutput>`
+
+
+
+</details>
+
+<details>
+<summary>publishBatch</summary>
+
+**Parameters**: `messages: PublishBatchRequestEntry[]`
+
+**Return Type**: `Promise<PublishCommandOutput>`
+
+
+
+</details>
+
+<details>
+<summary>sendSMS</summary>
+
+**Parameters**: `phoneNumber: string, message: string`
+
+**Return Type**: `Promise<PublishCommandOutput>`
+
+
+
+</details>
+
+<details>
+<summary>publishCommand</summary>
+
+**Parameters**: `command: PublishCommandInput`
 
 **Return Type**: `Promise<PublishCommandOutput>`
 
@@ -147,12 +194,23 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 
 ### SQS
 
-**Parameters**: `config?: SQSClientConfig`
+**Parameters**: `queueUrl: string, config?: SQSClientConfig`
 
 <details>
 <summary>sendMessage</summary>
 
-**Parameters**: `queueUrl: string, messageBody: string`
+**Parameters**: `messageBody: string`
+
+**Return Type**: `Promise<SendMessageCommandOutput>`
+
+
+
+</details>
+
+<details>
+<summary>sendMessageBatch</summary>
+
+**Parameters**: `messages: Record<string, any>[]`
 
 **Return Type**: `Promise<SendMessageCommandOutput>`
 
@@ -163,7 +221,7 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>receiveMessages</summary>
 
-**Parameters**: `queueUrl: string, maxNumberOfMessages: number = 1`
+**Parameters**: `maxNumberOfMessages: number = 1`
 
 **Return Type**: `Promise<ReceiveMessageCommandOutput>`
 
@@ -174,7 +232,7 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
 <details>
 <summary>deleteMessage</summary>
 
-**Parameters**: `queueUrl: string, receiptHandle: string`
+**Parameters**: `receiptHandle: string`
 
 **Return Type**: `Promise<DeleteMessageCommandOutput>`
 

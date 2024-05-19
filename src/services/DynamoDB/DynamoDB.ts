@@ -60,6 +60,7 @@ export class DynamoDB
   ): Promise<GetCommandOutput> {
     const response = await this.query(indexKeys, indexName)
     const item = response?.Items ? response.Items[0] : null
+
     indexKeys[skName] = item ? item[skName] : indexKeys[skName]
     const key = Object.keys(indexKeys).reduce(
       (key: Record<string, any>, attribute) => {

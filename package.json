@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "writeRM": "node dist/writeReadMe.js",
-    "save": "git add . && git commit -m 'generic save' && git push"
+    "save": "npm run writeRM && git add . && git commit -m 'generic save' && git push"
   },
   "keywords": [],
   "author": "",
