@@ -105,7 +105,6 @@ Detalhes: esse projeto foi implementado utilizando typescript e versão v3 do SD
   resources.forEach((resource) => {
     readmeContent += `<details>\n`
     readmeContent += `<summary>${resource.name}</summary>\n\n`
-    readmeContent += `<!-- Add method details here -->\n\n`
 
     readmeContent += `### ${resource.name}\n\n`
     readmeContent += `**Parameters**: \`${resource.parameters}\`\n\n`
